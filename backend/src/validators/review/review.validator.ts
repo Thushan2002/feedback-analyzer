@@ -1,6 +1,6 @@
-import { AppError } from "../utils/AppError.js";
-import { createReviewSchema, CreateReviewDto } from "../dto/review/create-review.dto.js";
-import { getReviewParamsSchema, GetReviewParamsDto } from "../dto/review/get-review-params.dto.js";
+import { AppError } from "../../utils/AppError.js";
+import { createReviewSchema, CreateReviewDto } from "../../dto/review/create-review.dto.js";
+import { getReviewParamsSchema, GetReviewParamsDto } from "../../dto/review/get-review-params.dto.js";
 
 export function validateCreateReview(body: unknown): CreateReviewDto {
   const result = createReviewSchema.safeParse(body);

@@ -1,8 +1,8 @@
-import { Prisma } from "../generated/prisma/client.js";
-import { prisma } from "../config/prisma.js";
-import { AppError } from "../utils/AppError.js";
-import { ReviewResponseDto, toReviewResponseDto } from "../dto/review/review-response.dto.js";
-import { validateCreateReview, validateGetReviewParams } from "../validators/review.validator.js";
+import { Prisma } from "../../generated/prisma/client.js";
+import { prisma } from "../../config/prisma.js";
+import { AppError } from "../../utils/AppError.js";
+import { ReviewResponseDto, toReviewResponseDto } from "../../dto/review/review-response.dto.js";
+import { validateCreateReview, validateGetReviewParams } from "../../validators/review/review.validator.js";
 
 export async function createReview(input: unknown): Promise<ReviewResponseDto> {
   const data = validateCreateReview(input);
