@@ -1,36 +1,23 @@
-import { z } from "zod";
 import { AppError } from "../utils/AppError.js";
+import { createReviewSchema, CreateReviewDto } from "../dto/review/create-review.dto.js";
+import { getReviewParamsSchema, GetReviewParamsDto } from "../dto/review/get-review-params.dto.js";
 
-const createReviewSchema = z.object({
-  customer_name: z
-    .string({ error: "customer_name is required and must be a non-empty string" })
-    .trim()
-    .min(1, "customer_name is required and must be a non-empty string"),
-  review_text: z
-    .string({ error: "review_text is required and must be a non-empty string" })
-    .trim()
-    .min(1, "review_text is required and must be a non-empty string"),
-  sentiment: z
-    .string({ error: "sentiment is required and must be a non-empty string" })
-    .trim()
-    .min(1, "sentiment is required and must be a non-empty string"),
-  confident_score: z.number({
-    error: "confident_score is required and must be an integer",
-  }).int("confident_score is required and must be an integer"),
-  email: z
-    .string({ error: "email is required and must be a valid email address" })
-    .trim()
-    .toLowerCase()
-    .pipe(z.email("email is required and must be a valid email address")),
-});
-
-export type CreateReviewInput = z.infer<typeof createReviewSchema>;
-
-export function validateCreateReview(body: unknown): CreateReviewInput {
+export function validateCreateReview(body: unknown): CreateReviewDto {
   const result = createReviewSchema.safeParse(body);
 
   if (!result.success) {
     const message = result.error.issues[0]?.message ?? "Invalid request body";
+    throw new AppError(message, 400);
+  }
+
+  return result.data;
+}
+
+export function validateGetReviewParams(params: unknown): GetReviewParamsDto {
+  const result = getReviewParamsSchema.safeParse(params);
+
+  if (!result.success) {
+    const message = result.error.issues[0]?.message ?? "Invalid request parameters";
     throw new AppError(message, 400);
   }
 
