@@ -1,5 +1,4 @@
 import "dotenv/config";
-import { log } from "node:console";
 
 function requireEnv(key: string): string {
   const value = process.env[key];
