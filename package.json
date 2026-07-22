@@ -8,10 +8,10 @@
   },
   "lint-staged": {
     "backend/**/*.ts": [
-      "eslint --fix --config backend/eslint.config.js"
+      "bash -c 'cd backend && npx eslint --fix .'"
     ],
     "frontend/**/*.{ts,tsx}": [
-      "eslint --fix --config frontend/eslint.config.js"
+      "bash -c 'cd frontend && npx eslint --fix .'"
     ],
     "ai-services/**/*.py": [
       "bash -c 'cd ai-services && uv run ruff check --fix && uv run ruff format'"
