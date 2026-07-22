@@ -8,10 +8,10 @@
   },
   "lint-staged": {
     "backend/**/*.ts": [
-      "bash -c 'cd backend && npx eslint --fix .'"
+      "eslint --fix --config backend/eslint.config.js"
     ],
     "frontend/**/*.{ts,tsx}": [
-      "bash -c 'cd frontend && npx eslint --fix .'"
+      "eslint --fix --config frontend/eslint.config.js"
     ],
     "ai-services/**/*.py": [
       "bash -c 'cd ai-services && uv run ruff check --fix && uv run ruff format'"
@@ -22,7 +22,12 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
+    "@stylistic/eslint-plugin": "^5.10.0",
+    "eslint": "^9.39.5",
+    "eslint-plugin-import": "^2.32.0",
+    "globals": "^17.7.0",
     "husky": "^9.1.7",
-    "lint-staged": "^16.4.0"
+    "lint-staged": "^16.4.0",
+    "typescript-eslint": "^8.65.0"
   }
 }
