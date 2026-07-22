@@ -1,5 +1,6 @@
-import { Request, Response } from "express";
-import * as reviewService from "../../services/review/review.service.js";
+import type { Request, Response } from 'express';
+
+import * as reviewService from '../../services/review/review.service.js';
 
 export async function createReview(req: Request, res: Response): Promise<void> {
   const review = await reviewService.createReview(req.body);
