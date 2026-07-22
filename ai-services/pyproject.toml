@@ -11,3 +11,31 @@ dependencies = [
     "transformers>=5.14.1",
     "uvicorn>=0.51.0",
 ]
+
+[dependency-groups]
+dev = [
+    "mypy>=2.3.0",
+    "ruff>=0.15.22",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = [
+  "E", "F", "W",
+  "I",
+  "UP",
+  "B",
+  "ASYNC",
+]
+ignore = []
+
+[tool.ruff.lint.isort]
+known-first-party = ["app"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+ignore_missing_imports = true
