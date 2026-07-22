@@ -1,3 +1,16 @@
-.venv/
+# Python cache
 __pycache__/
-*.pyc
+*.py[cod]
+*$py.class
+
+# Virtual environment
+.venv/
+
+# Type checking cache
+.mypy_cache/
+
+# Ruff cache
+.ruff_cache/
+
+# Test cache
+.pytest_cache/
