@@ -5,7 +5,7 @@ import { Prisma } from '../../generated/prisma/client.js';
 import { AppError } from '../../utils/AppError.js';
 import { validateCreateReview, validateGetReviewParams } from '../../validators/review/review.validator.js';
 
-export async function createReview(input: unknown): Promise<ReviewResponseDto> {
+export async function createFeedback(input: unknown): Promise<ReviewResponseDto> {
   const data = validateCreateReview(input);
 
   try {
@@ -19,7 +19,7 @@ export async function createReview(input: unknown): Promise<ReviewResponseDto> {
   }
 }
 
-export async function fetchReview(params: unknown): Promise<ReviewResponseDto> {
+export async function fetchFeedback(params: unknown): Promise<ReviewResponseDto> {
   const { id } = validateGetReviewParams(params);
 
   const review = await prisma.reviews.findUnique({ where: { id } });
