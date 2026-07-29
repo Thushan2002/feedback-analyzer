@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export const createReviewSchema = z.object({
+export const createFeedbackSchema = z.object({
   customer_name: z
     .string({ error: 'customer_name is required and must be a non-empty string' })
     .trim()
@@ -23,4 +23,4 @@ export const createReviewSchema = z.object({
     .pipe(z.email('email is required and must be a valid email address')),
 });
 
-export type CreateReviewDto = z.infer<typeof createReviewSchema>;
+export type CreateFeedbackInput = z.infer<typeof createFeedbackSchema>;

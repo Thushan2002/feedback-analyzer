@@ -1,12 +1,19 @@
 import { prisma } from '../../config/prisma.js';
+import { CreateFeedbackInput } from '../../dto/review/create-review.dto.js';
+import type { GetReviewParamsDto } from '../../dto/review/get-review-params.dto.js';
 import type { ReviewResponseDto } from '../../dto/review/review-response.dto.js';
 import { toReviewResponseDto } from '../../dto/review/review-response.dto.js';
 import { Prisma } from '../../generated/prisma/client.js';
 import { AppError } from '../../utils/AppError.js';
-import { validateCreateReview, validateGetReviewParams } from '../../validators/review/review.validator.js';
 
-export async function createFeedback(input: unknown): Promise<ReviewResponseDto> {
-  const data = validateCreateReview(input);
+export async function createFeedback(input: CreateFeedbackInput): Promise<ReviewResponseDto> {
+  const data: Prisma.ReviewsCreateInput = {
+    customer_name: input.customer_name,
+    review_text: input.review_text,
+    sentiment: input.sentiment,
+    confident_score: input.confident_score,
+    email: input.email,
+  };
 
   try {
     const review = await prisma.reviews.create({ data });
@@ -19,9 +26,8 @@ export async function createFeedback(input: unknown): Promise<ReviewResponseDto>
   }
 }
 
-export async function fetchFeedback(params: unknown): Promise<ReviewResponseDto> {
-  const { id } = validateGetReviewParams(params);
-
+export async function fetchFeedback(params: GetReviewParamsDto): Promise<ReviewResponseDto> {
+  const { id } = params;
   const review = await prisma.reviews.findUnique({ where: { id } });
 
   if (!review) {
