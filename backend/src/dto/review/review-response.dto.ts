@@ -1,4 +1,4 @@
-import { Reviews } from "../../generated/prisma/client.js";
+import type { Reviews } from '../../generated/prisma/client.js';
 
 export interface ReviewResponseDto {
   id: number;
