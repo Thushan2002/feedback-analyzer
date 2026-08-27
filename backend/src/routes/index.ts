@@ -1,9 +1,9 @@
 import { Router } from 'express';
 
-import reviewRoutes from './review/review.routes.js';
+import feedbackRoutes from './feedback/feedback.routes.js';
 
 const router = Router();
 
-router.use('/reviews', reviewRoutes);
+router.use('/feedbacks', feedbackRoutes);
 
 export default router;
