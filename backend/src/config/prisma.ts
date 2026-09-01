@@ -15,6 +15,6 @@ export const prisma =
     }),
   });
 
-if (env.nodeEnv !== "production") {
+if (env.nodeEnv !== 'production') {
   globalForPrisma.prisma = prisma;
 }

@@ -23,7 +23,7 @@ export function errorHandler(
   }
 
   const error = err instanceof Error ? err : new Error('Unknown error');
-  req.log.error({err: error}, 'Unhandled application error');
+  req.log.error({ err: error }, 'Unhandled application error');
 
   res.status(500).json({
     success: false,

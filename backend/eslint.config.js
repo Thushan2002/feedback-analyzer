@@ -7,7 +7,7 @@ import importPlugin from 'eslint-plugin-import';
 
 export default tseslint.config(
   {
-    ignores: ['dist/**', 'node_modules/**', 'coverage/**'],
+    ignores: ['dist/**', 'node_modules/**', 'coverage/**', 'src/generated/**', 'eslint.config.js', 'prisma.config.ts'],
   },
   js.configs.recommended,
   ...tseslint.configs.recommendedTypeChecked,
