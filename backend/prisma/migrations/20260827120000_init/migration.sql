@@ -1,14 +1,5 @@
-/*
-  Warnings:
-
-  - You are about to drop the `Reviews` table. If the table is not empty, all the data it contains will be lost.
-
-*/
 -- CreateEnum
 CREATE TYPE "Sentiment" AS ENUM ('POSITIVE', 'NEGATIVE', 'NEUTRAL');
-
--- DropTable
-DROP TABLE "Reviews";
 
 -- CreateTable
 CREATE TABLE "User" (

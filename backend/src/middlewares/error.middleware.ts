@@ -17,12 +17,13 @@ export function errorHandler(
   _next: NextFunction,
 ): void {
   if (err instanceof AppError) {
+    req.log.warn({ err }, err.message);   
     res.status(err.statusCode).json({ success: false, message: err.message });
     return;
   }
 
   const error = err instanceof Error ? err : new Error('Unknown error');
-  console.error(error);
+  req.log.error({ err: error }, 'Unhandled application error');
 
   res.status(500).json({
     success: false,
