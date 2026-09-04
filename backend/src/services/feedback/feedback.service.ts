@@ -1,3 +1,5 @@
+import axios from 'axios';
+import { env } from '../../config/env.js';
 import { prisma } from '../../config/prisma.js';
 import type { CreateFeedbackDto } from '../../dto/feedback/create-feedback.dto.js';
 import type { FeedbackResponseDto } from '../../dto/feedback/feedback-response.dto.js';
@@ -7,10 +9,17 @@ import type { Prisma } from '../../generated/prisma/client.js';
 import { AppError } from '../../utils/AppError.js';
 
 export async function createFeedback(dto: CreateFeedbackDto): Promise<FeedbackResponseDto> {
+
+  
+    const response = await axios.post(`${env.fastApiEnv}/analyze`,{
+      text: dto.text
+    })
+    
+  
   const data: Prisma.FeedbackCreateInput = {
     text: dto.text,
-    sentiment: dto.sentiment,
-    confidence: dto.confidence,
+    sentiment: response.data.label,
+    confidence: response.data.score,
     urgencyScore: dto.urgencyScore,
     source: dto.source,
     user: {
