@@ -1,6 +1,7 @@
-import { NextFunction, Request, Response } from "express";
-import { env } from "../config/env.js";
-import { AppError } from "../utils/AppError.js";
+import type { NextFunction, Request, Response } from 'express';
+
+import { env } from '../config/env.js';
+import { AppError } from '../utils/AppError.js';
 
 export function notFoundHandler(req: Request, res: Response): void {
   res.status(404).json({
@@ -13,18 +14,19 @@ export function errorHandler(
   err: unknown,
   req: Request,
   res: Response,
-  _next: NextFunction
+  _next: NextFunction,
 ): void {
   if (err instanceof AppError) {
+    req.log.warn({ err }, err.message);   
     res.status(err.statusCode).json({ success: false, message: err.message });
     return;
   }
 
-  const error = err instanceof Error ? err : new Error("Unknown error");
-  console.error(error);
+  const error = err instanceof Error ? err : new Error('Unknown error');
+  req.log.error({ err: error }, 'Unhandled application error');
 
   res.status(500).json({
     success: false,
-    message: env.isProduction ? "Internal server error" : error.message,
+    message: env.isProduction ? 'Internal server error' : error.message,
   });
 }
