@@ -12,5 +12,8 @@ __pycache__/
 # Ruff cache
 .ruff_cache/
 
+# Local environment secrets
+.env
+
 # Test cache
 .pytest_cache/
