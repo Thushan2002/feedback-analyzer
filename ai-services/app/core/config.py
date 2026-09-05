@@ -1,7 +1,11 @@
+import os
 from functools import lru_cache
 from pathlib import Path
 
+from dotenv import load_dotenv
 from pydantic import BaseModel
+
+load_dotenv(Path(__file__).resolve().parents[2] / ".env")
 
 
 class Settings(BaseModel):
@@ -9,27 +13,22 @@ class Settings(BaseModel):
     debug: bool = False
     model_name: str = "distilbert-base-uncased-finetuned-sentiment"
     port: int = 8000
+    environment: str = "development"
+    internal_api_key: str = ""
 
 
 @lru_cache
 def get_settings() -> Settings:
-    env_path = Path(__file__).resolve().parents[1] / ".env"
-    if env_path.exists():
-        import os
+    settings = Settings(
+        app_name=os.getenv("APP_NAME", Settings.model_fields["app_name"].default),
+        debug=os.getenv("DEBUG", "false").lower() == "true",
+        model_name=os.getenv("MODEL_NAME", Settings.model_fields["model_name"].default),
+        port=int(os.getenv("PORT", str(Settings.model_fields["port"].default))),
+        environment=os.getenv("APP_ENV", os.getenv("NODE_ENV", "development")),
+        internal_api_key=os.getenv("AI_SERVICE_SECRET", ""),
+    )
 
-        for key, value in {
-            "APP_NAME": "app_name",
-            "DEBUG": "debug",
-            "MODEL_NAME": "model_name",
-            "PORT": "port",
-        }.items():
-            env_value = os.getenv(key)
-            if env_value is not None:
-                if key == "DEBUG":
-                    setattr(Settings(), value, env_value.lower() == "true")
-                elif key == "PORT":
-                    setattr(Settings(), value, int(env_value))
-                else:
-                    setattr(Settings(), value, env_value)
+    if settings.environment.lower() in {"development", "prod"} and not settings.internal_api_key:
+        raise ValueError("AI_SERVICE_SECRET must be configured in production")
 
-    return Settings()
+    return settings
