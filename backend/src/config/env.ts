@@ -10,8 +10,9 @@ function requireEnv(key: string): string {
 
 const nodeEnv = process.env.NODE_ENV ?? 'development';
 const port = Number(process.env.PORT ?? 3000);
-const fastApiEnv = process.env.FAST_API_ENDPOINT ?? ''
-const aiServiceApiKey = process.env.AI_SERVICE_SECRET ?? ''
+const fastApiEnv = process.env.FAST_API_ENDPOINT ?? '';
+const aiServiceApiKey = process.env.AI_SERVICE_SECRET ?? '';
+const frontendUrl = process.env.FRONTEND_URL ?? 'http://localhost:5173';
 
 if (!Number.isInteger(port) || port <= 0) {
   throw new Error(`Invalid PORT environment variable: ${process.env.PORT}`);
@@ -32,4 +33,5 @@ export const env = {
   jwtExpiresIn,
   fastApiEnv,
   aiServiceApiKey,
+  frontendUrl,
 };
