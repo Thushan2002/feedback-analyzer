@@ -1,9 +1,11 @@
-import React from 'react'
+import { BrowserRouter } from 'react-router-dom';
+import { AuthProvider } from './hooks/useAuth';
+import { AppRoutes } from './routes/AppRoutes';
 
-const App = () => {
-  return (
-    <div className='text-amber-100'>App</div>
-  )
+export default function App() {
+  return <BrowserRouter>
+    <AuthProvider>
+      <AppRoutes />
+    </AuthProvider>
+  </BrowserRouter>;
 }
-
-export default App
